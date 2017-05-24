@@ -44,12 +44,19 @@
 int x = 0;
 int y = 0;
 
+struct burst_data {
+  byte motion;
+  byte dx, dy;
+  byte squal;
+  byte shutter;
+  byte max_pix;
+  };
+
+byte burst_frame[30][30]; 
+
 int powerUp() {
   // reset ADNS 3080
-  digitalWrite(resetPin, HIGH);
-  delay(1);
-  digitalWrite(resetPin, LOW);
-  delay(35);  
+  reset();
 
   // check connection
   digitalWrite(slaveSelectPin, LOW);
@@ -57,6 +64,14 @@ int powerUp() {
   delay(50);
   return ID;
 }
+
+void reset(){
+  // reset ADNS 3080
+  digitalWrite(resetPin, HIGH);
+  delay(1);
+  digitalWrite(resetPin, LOW);
+  delay(35);  
+  }
 
 void setup() {
   Serial.begin(9600);
@@ -76,14 +91,14 @@ void setup() {
   // power up & test connection
   if(powerUp() == 23){
     Serial.println("connection succesful");
+
+    // turn on sensitive mode
+    writeTo(CONFIGURATION_BITS_REG,0X19);
     }
   else{
     Serial.println("connection unsuccesful");
     while(1){};
     }
-
-  // turn on sensitive mode
-  writeTo(CONFIGURATION_BITS_REG,0X19);
   
   delay(10);
 
@@ -135,18 +150,11 @@ byte readFrom(byte reg, int byteNo){
   return result;
 }
 
-struct burst_data {
-  byte motion;
-  byte dx, dy;
-  byte squal;
-  byte shutter;
-  byte max_pix;
-  };
-
 void burstRead(struct burst_data *p){
     // make address with reg and read bit
   byte address =  MOTION_BURST_REG & 0x7f;
-  
+
+  // select device
   digitalWrite(slaveSelectPin,LOW);
   
   SPI.transfer(address);// send address
@@ -161,9 +169,36 @@ void burstRead(struct burst_data *p){
   
   digitalWrite(slaveSelectPin,HIGH);
   delayMicroseconds(5);
-
-  
+ 
   }
+
+// pointer to array in argument
+void captureFrame(byte pdata[][30]){ 
+  // write to frame capture register to prepare frame
+  writeTo(FRAME_CAPTURE_REG,0x83);
+
+  // make address with reg and read bit
+  byte address =  PIXEL_BURST_REG & 0x7f;
+
+  delayMicroseconds(10);
+
+  // select device
+  digitalWrite(slaveSelectPin,LOW);
+  
+  SPI.transfer(address);// send address
+  delayMicroseconds(100);
+
+  // read pixel data into array
+  for (int i=0; i < 30; i++){
+    for (int j=0; j <30; j++){
+      pdata[i][j] = SPI.transfer(0x00);//<<2; // remove 2 MSBs to get in normal grascale 
+      delayMicroseconds(10);
+      }}
+    
+
+  digitalWrite(slaveSelectPin,HIGH);
+  delayMicroseconds(5);
+}
 
 int convTwosComp(byte b){
   int num = (int) b;
@@ -174,17 +209,26 @@ int convTwosComp(byte b){
 };
 
 void loop() {
-  burst_data data;
-  burstRead(&data);
+  //burst_data data;
+  //burstRead(&data);
 
-  int mot = (int)data.motion;
-  if(mot == 129){
-    int x = convTwosComp(data.dx);
-    int y = convTwosComp(data.dy); 
-    Serial.print("dx: ");
-    Serial.print( x );
-    Serial.print(" dy: ");
-    Serial.println( y ); 
+  //int mot = (int)data.motion;
+  //if(mot == 129){
+  //  int x = convTwosComp(data.dx);
+  //  int y = convTwosComp(data.dy); 
+  //  Serial.print("dx: ");
+  //  Serial.print( x );
+  //  Serial.print(" dy: ");
+  //  Serial.println( y ); 
+  // }
+    
+   captureFrame(burst_frame);
+   for (int i = 0; i < 30; i++){
+    for (int j = 0; j < 30; j++){
+      Serial.print(burst_frame[i][j]);
+    }
    }
+   Serial.print((byte) 127);
+   Serial.flush();
 }
 
