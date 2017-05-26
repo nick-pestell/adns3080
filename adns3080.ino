@@ -1,4 +1,5 @@
 #include <SPI.h>
+#include <avr/pgmspace.h>
 
 // define registers
 #define PROD_ID_REG 0x00
@@ -43,6 +44,7 @@
 
 int x = 0;
 int y = 0;
+int val;
 
 struct burst_data {
   byte motion;
@@ -191,7 +193,7 @@ void captureFrame(byte pdata[][30]){
   // read pixel data into array
   for (int i=0; i < 30; i++){
     for (int j=0; j <30; j++){
-      pdata[i][j] = SPI.transfer(0x00);//<<2; // remove 2 MSBs to get in normal grascale 
+      pdata[i][j] = SPI.transfer(0x00)<<2; // remove 2 MSBs to get in normal grascale 
       delayMicroseconds(10);
       }}
     
@@ -221,14 +223,17 @@ void loop() {
   //  Serial.print(" dy: ");
   //  Serial.println( y ); 
   // }
-    
-   captureFrame(burst_frame);
-   for (int i = 0; i < 30; i++){
-    for (int j = 0; j < 30; j++){
-      Serial.print(burst_frame[i][j]);
+
+   //val = Serial.read();
+
+   //if (val == '1'){
+    captureFrame(burst_frame);
+    for (int i = 0; i < 30; i++){
+      for (int j = 0; j < 30; j++){
+        Serial.write(burst_frame[i][j]);
+      }
     }
-   }
-   Serial.print((byte) 127);
-   Serial.flush();
+    //val == '0';
+   //}   
 }
 
