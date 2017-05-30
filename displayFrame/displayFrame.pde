@@ -9,6 +9,7 @@ final float sz = 20;
 
 Serial port; // declare serial port
 byte[] FrameBuffer = new byte[900];
+int lf = 10;
 
 void setup()
 {
@@ -16,43 +17,37 @@ void setup()
 
   initSerial();
   background(245);
-  frameRate(12);
+  frameRate(30);
   noStroke();
   noSmooth();
-  //port.write('1');
 
 }
 
-void serialEvent(Serial port){
-    FrameBuffer = port.readBytes();
-    //println("new frame!");
-    //for (int i = 0; i<900; i++){
-    //  println(FrameBuffer[i]);
-    //}
-    updateFrame(FrameBuffer);
-  
-}
+
 
 void draw()
-{  
+{ 
+  // check if whole frame recieved and update display
+  if(FrameBuffer.length == 901){
+  updateFrame(FrameBuffer);
+  }
+}
+
+void serialEvent(Serial port){ 
+  FrameBuffer = port.readBytes();
+  println(FrameBuffer.length);
 }
 
 void updateFrame(byte[] data){
-  background(245);
   int k = 0;
   for(int i = 0; i<frameX; i++){
     for(int j = 0; j<frameY; j++){
-    fill(data[k]);
-    print(data[k]);
-    print("      pixel number:");
-    println(k);
-    rect(sz*i, sz*j, sz, sz);
-    k ++;
+      fill(data[k]);
+      rect(sz*i, sz*j, sz, sz);
+      k ++;
     }
   }
-  print ("new frame!");
-  //port.write('1');
-}
+  }
 
 
 void initSerial()
@@ -60,5 +55,5 @@ void initSerial()
   String portName = Serial.list()[0];
   port = new Serial(this, portName, rate);
   println("Using " + portName + " as serial device.");
-  port.buffer(900);
+  port.bufferUntil(lf);
 }

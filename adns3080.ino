@@ -44,7 +44,6 @@
 
 int x = 0;
 int y = 0;
-int val;
 
 struct burst_data {
   byte motion;
@@ -194,6 +193,8 @@ void captureFrame(byte pdata[][30]){
   for (int i=0; i < 30; i++){
     for (int j=0; j <30; j++){
       pdata[i][j] = SPI.transfer(0x00)<<2; // remove 2 MSBs to get in normal grascale 
+      // write to serial port for processing display frame.
+      Serial.write(pdata[i][j]);
       delayMicroseconds(10);
       }}
     
@@ -224,16 +225,7 @@ void loop() {
   //  Serial.println( y ); 
   // }
 
-   //val = Serial.read();
-
-   //if (val == '1'){
     captureFrame(burst_frame);
-    for (int i = 0; i < 30; i++){
-      for (int j = 0; j < 30; j++){
-        Serial.write(burst_frame[i][j]);
-      }
-    }
-    //val == '0';
-   //}   
+    Serial.write(10);
 }
 
