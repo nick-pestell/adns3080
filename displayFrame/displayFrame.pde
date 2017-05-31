@@ -35,7 +35,6 @@ void draw()
 
 void serialEvent(Serial port){ 
   FrameBuffer = port.readBytes();
-  println(FrameBuffer.length);
 }
 
 void updateFrame(byte[] data){
