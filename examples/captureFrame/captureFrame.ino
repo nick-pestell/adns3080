@@ -5,7 +5,7 @@ byte frame_data[30][30];
 
 void setup() {
   
-  Serial.begin(9600);
+  Serial.begin(115200);
   ADNS_3080.initSPI();
   ADNS_3080.powerUp();
 }

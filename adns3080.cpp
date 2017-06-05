@@ -155,26 +155,28 @@ void adns3080::captureFrame(byte pdata[][30]){
   // make address with reg and read bit
   byte address =  PIXEL_BURST_REG & 0x7f;
 
-  delayMicroseconds(10);
+  //delayMicroseconds(10);
+  delay(5);
 
   // select device
   digitalWrite(_slaveSelectPin,LOW);
   
   SPI.transfer(address);// send address
-  delayMicroseconds(100);
+  //delayMicroseconds(100);
+  delay(1);
 
   // read pixel data into array
   for (int i=0; i < 30; i++){
     for (int j=0; j <30; j++){
-      pdata[i][j] = SPI.transfer(0x00)<<2; // remove 2 MSBs to get in normal grascale 
+      pdata[i][j] = SPI.transfer(0x00); 
       // write to serial port for processing display frame
       Serial.write(pdata[i][j]);
-      delayMicroseconds(10);
+      //delayMicroseconds(10);
       }}
     
 
   digitalWrite(_slaveSelectPin,HIGH);
-  delayMicroseconds(5);
+  //delayMicroseconds(5);
   
   // signal end of frame 
   Serial.write(10);

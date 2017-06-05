@@ -1,6 +1,6 @@
 import processing.serial.*;
 
-final int rate = 9600;
+final int rate = 115200;
 final int frameX = 30;
 final int frameY = 30;
 final int frameLen = frameX * frameY;
@@ -41,7 +41,7 @@ void updateFrame(byte[] data){
   int k = 0;
   for(int i = 0; i<frameX; i++){
     for(int j = 0; j<frameY; j++){
-      fill(data[k]);
+      fill((data[k] & 0x3f)*4); // remove 2 MSBs and scale by 4 to get in ture greyscale
       rect(sz*i, sz*j, sz, sz);
       k ++;
     }
