@@ -9,6 +9,8 @@ final float sz = 20;
 
 Serial port; // declare serial port
 byte[] FrameBuffer = new byte[900];
+
+// end of frame indicator
 int lf = 10;
 
 void setup()

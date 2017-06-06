@@ -4,6 +4,9 @@ adns3080 ADNS_3080(8,10);
 byte frame_data[30][30];
 
 void setup() {
+
+  pinMode(7,OUTPUT);
+  digitalWrite(7,HIGH);
   
   Serial.begin(115200);
   ADNS_3080.initSPI();
