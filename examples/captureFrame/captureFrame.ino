@@ -1,6 +1,6 @@
 #include <adns3080.h>
 
-adns3080 ADNS_3080(8,10);
+adns3080 ADNS_3080(4,10);
 byte frame_data[30][30];
 
 void setup() {

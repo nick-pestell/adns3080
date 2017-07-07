@@ -1,10 +1,8 @@
 #include <adns3080.h>
 
-adns3080 ADNS_3080(8,10);
+adns3080 ADNS_3080(4,10);
 
 void setup() {
-  pinMode(7,OUTPUT);
-  digitalWrite(7,HIGH);
   Serial.begin(115200);
   ADNS_3080.initSPI();
   ADNS_3080.powerUp();
