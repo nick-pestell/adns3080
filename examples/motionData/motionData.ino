@@ -6,26 +6,30 @@ void setup() {
   Serial.begin(115200);
   ADNS_3080.initSPI();
   ADNS_3080.powerUp();
+
+  pinMode(2,OUTPUT);
+  digitalWrite(2,HIGH);
 }
 
 unsigned long Time = 0;
 int squal;
-int mot;
+byte mot;
+int8_t x;
+int8_t y;
 void loop() {
   
   burst_data data;
   ADNS_3080.burstRead(&data);
   //check if movement
-  //mot = (int)data.motion;
-  //if(mot == 129){
-    //int x = ADNS_3080.convTwosComp(data.dx);
-    //int y = ADNS_3080.convTwosComp(data.dy); 
-    
-    //Serial.print("dx: ");
-    //Serial.print( x );
-    //Serial.print(" dy: ");
-    //Serial.println( y ); 
- //  }
- squal = (int)data.squal;
- Serial.println(squal); 
+  mot = data.motion;
+  if(mot & 0x80){
+    x = (int8_t)data.dx;
+    y = (int8_t)data.dy; 
+    Serial.print("dx: ");
+    Serial.println( x );
+   // Serial.print(" dy: ");
+   // Serial.println( y ); 
+   }
+
+ 
 }

@@ -7,27 +7,31 @@ void setup() {
   ADNS_3080.initSPI();
   ADNS_3080.powerUp();
 
+  pinMode(2,OUTPUT);
+  digitalWrite(2,HIGH);
+
 }
 
+int SQUAL;
 
 void loop() {  
   burst_data data;
   ADNS_3080.burstRead(&data);
-  int x = ADNS_3080.convTwosComp(data.dx);
-  Serial.println(x);
+  //int x = ADNS_3080.convTwosComp(data.dx);
+  //Serial.write(x);
   
-  //int y = ADNS_3080.convTwosComp(data.dy);
-  //Serial.println(y);
+  //int8_t y = data.dy;
+ // Serial.write(y);
   
-  //int SQUAL = (int)data.squal;
-  //Serial.println( SQUAL ); 
+  //SQUAL = (int)data.squal;
+  Serial.write( data.squal );
 
   //int shutter = (int)data.shutter;
-  //Serial.println(shutter);
+  //Serial.write(shutter);
 
   //int max_pix = (int)data.max_pix;
-  //Serial.println(max_pix);
+  //Serial.write(max_pix);
   
-  delay(6); // need this delay to synchronise with serial read in matlab
+  delay(50); // need this delay to synchronise with serial read in matlab
   
 }

@@ -48,12 +48,12 @@ int adns3080::powerUp(){
 	
 	// test connection
 	if(ID == 23){
-		Serial.println("connection succesful");
+		//Serial.println("connection succesful");
 		// turn on sensitive mode
-		writeTo(CONFIGURATION_BITS_REG,0x19);
+		writeTo(CONFIGURATION_BITS_REG,0x10);
 		}
 	else{
-		Serial.println("connection unsuccesful");
+		//Serial.println("connection unsuccesful");
 		}
 	
 	delay(10);
@@ -135,9 +135,9 @@ void adns3080::burstRead(struct burst_data *p){
   p->dx =  SPI.transfer(0x00);
   p->dy =  SPI.transfer(0x00);
   p->squal =  SPI.transfer(0x00);
-  p->shutter =  SPI.transfer(0x00)<<8;
-  p->shutter |=  SPI.transfer(0x00);
-  p->max_pix =  SPI.transfer(0x00);
+  //p->shutter =  SPI.transfer(0x00)<<8;
+  //p->shutter |=  SPI.transfer(0x00);
+  //p->max_pix =  SPI.transfer(0x00);
   
 
   
@@ -175,7 +175,9 @@ void adns3080::captureFrame(byte pdata[][30]){
   digitalWrite(_slaveSelectPin,HIGH);
   
   // signal end of frame 
+  //Serial.println();
   Serial.write(10);
+  
 }
 
 // twos compliment --> integer
