@@ -11,11 +11,13 @@ catch err
     error('incorect com port')
 end
 
-Tmax = 100;
+Tmax = 30;
 figure
 grid on;
 xlabel('Time(s)');
 Ts = 0.001; i = 0; data = 0; t = 0;
+
+pause(5);
 tic;
 
 %% image quality
@@ -23,6 +25,7 @@ ylabel('Image Quality');
 while toc <= Tmax
     i = i +1;
     data(i) = fread(arduino);
+    timeS(i) = toc;
     t(i) = toc;
     if i > 1
         T = toc - t(i-1);
@@ -36,6 +39,7 @@ while toc <= Tmax
         line([t(i-1) t(i)],[data(i-1) data(i)])
         drawnow
     end
+
 end
 
 

@@ -3,7 +3,7 @@
 adns3080 ADNS_3080(4,10);
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(19200);
   ADNS_3080.initSPI();
   ADNS_3080.powerUp();
 
@@ -12,11 +12,11 @@ void setup() {
 
 }
 
-int SQUAL;
+byte SQUAL;
 
 void loop() {  
-  burst_data data;
-  ADNS_3080.burstRead(&data);
+  //burst_data data;
+  //ADNS_3080.burstRead(&data);
   //int x = ADNS_3080.convTwosComp(data.dx);
   //Serial.write(x);
   
@@ -24,7 +24,7 @@ void loop() {
  // Serial.write(y);
   
   //SQUAL = (int)data.squal;
-  Serial.write( data.squal );
+  //Serial.write( data.squal );
 
   //int shutter = (int)data.shutter;
   //Serial.write(shutter);
@@ -32,6 +32,9 @@ void loop() {
   //int max_pix = (int)data.max_pix;
   //Serial.write(max_pix);
   
-  delay(50); // need this delay to synchronise with serial read in matlab
+  //delay(50); // need this delay to synchronise with serial read in matlab
+
+  SQUAL  = ADNS_3080.readFrom(SQUAL_REG,1);
+  Serial.write(SQUAL); 
   
 }

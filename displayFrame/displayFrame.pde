@@ -32,6 +32,7 @@ void draw()
   // check if whole frame recieved and update display
   if(FrameBuffer.length == 901){
   updateFrame(FrameBuffer);
+  //save("frame.jpg");
   }
 }
 
@@ -53,7 +54,7 @@ void updateFrame(byte[] data){
 
 void initSerial()
 {
-  String portName = Serial.list()[1]; 
+  String portName = Serial.list()[0]; 
   port = new Serial(this, portName, rate);
   println("Using " + portName + " as serial device.");
   port.bufferUntil(lf);
