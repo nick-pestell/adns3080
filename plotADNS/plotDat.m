@@ -1,7 +1,7 @@
 dbstop if error
 clear all
 
-arduino = serial('COM8');
+arduino = serial('/dev/ttyUSB0');
 arduino.InputBufferSize = 1;
 arduino.BaudRate = 115200;
 try 
@@ -11,7 +11,7 @@ catch err
     error('incorect com port')
 end
 
-Tmax = 30;
+Tmax = 120;
 figure
 grid on;
 xlabel('Time(s)');

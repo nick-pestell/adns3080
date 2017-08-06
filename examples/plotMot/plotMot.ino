@@ -4,7 +4,7 @@
 adns3080 ADNS_3080(4,10);
 
 void setup() {
-  Serial.begin(230400);
+  Serial.begin(115200);
   ADNS_3080.initSPI();
   ADNS_3080.powerUp();
 
@@ -25,6 +25,6 @@ void loop() {
   Serial.write(SQUAL);
   //Serial.println(millis()); 
 
-  //delay(50);
+  delay(100);
   
 }
