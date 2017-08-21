@@ -22,7 +22,7 @@ void loop() {
 
   SQUAL  = ADNS_3080.readFrom(SQUAL_REG,1);
   Serial.write(SQUAL);
-  Serial.println(millis()); 
+  //Serial.println(millis()); 
 
   //delay(50);
   
