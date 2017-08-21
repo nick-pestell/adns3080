@@ -16,6 +16,8 @@ void setup() {
 
 void loop() {
 
-  ADNS_3080.captureFrame(frame_data);
-  
+  if (Serial.available() > 0){
+    Serial.read();
+    ADNS_3080.captureFrame(frame_data);
+  }
 }
