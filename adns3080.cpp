@@ -173,7 +173,6 @@ void adns3080::captureFrame(byte pdata[][30]){
     
 
   digitalWrite(_slaveSelectPin,HIGH);
-  
   // signal end of frame 
   //Serial.println();
   Serial.write(10);
