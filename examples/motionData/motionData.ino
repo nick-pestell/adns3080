@@ -18,18 +18,22 @@ int8_t x;
 int8_t y;
 void loop() {
   
-  burst_data data;
-  ADNS_3080.burstRead(&data);
+  //burst_data data;
+  //ADNS_3080.burstRead(&data);
   //check if movement
-  mot = data.motion;
-  if(mot & 0x80){
-    x = (int8_t)data.dx;
-    y = (int8_t)data.dy; 
-    Serial.print("dx: ");
-    Serial.println( x );
+  //mot = data.motion;
+  //if(mot & 0x80){
+  //  x = (int8_t)data.dx;
+  //  y = (int8_t)data.dy; 
+  //  Serial.print("dx: ");
+  //  Serial.println( x );
    // Serial.print(" dy: ");
    // Serial.println( y ); 
-   }
+  // }
+  squal  = ADNS_3080.readFrom(SQUAL_REG,1);
+  Serial.write(squal);
+  delay(50);
+  
 
  
 }
