@@ -54,7 +54,8 @@ void updateFrame(byte[] data){
 
 void initSerial()
 {
-  String portName = Serial.list()[0]; 
+  //String portName = Serial.list()[0]; 
+  String portName = "COM4";
   port = new Serial(this, portName, rate);
   println("Using " + portName + " as serial device.");
   port.bufferUntil(lf);

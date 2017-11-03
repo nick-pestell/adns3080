@@ -1,7 +1,7 @@
 dbstop if error
 clear all
 
-arduino = serial('COM10');
+arduino = serial('COM4');
 arduino.InputBufferSize = 1;
 arduino.BaudRate = 115200;
 try 
