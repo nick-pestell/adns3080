@@ -110,9 +110,10 @@ byte adns3080::readFrom(byte reg, int byteNo){
     byteNo--;     
   }
   // de-select
-  delayMicroseconds(30);
+  //delayMicroseconds(30);
   digitalWrite(_slaveSelectPin, HIGH);
-  delayMicroseconds(30);
+  //delayMicroseconds(30);
+  delayMicroseconds(5);
   
   // return result
   return result;
@@ -173,7 +174,7 @@ void adns3080::captureFrame(byte pdata[][30]){
     
 
   digitalWrite(_slaveSelectPin,HIGH);
-  
+  delayMicroseconds(5);
   // signal end of frame 
   //Serial.println();
   Serial.write(10);

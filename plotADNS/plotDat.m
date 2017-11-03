@@ -1,7 +1,11 @@
 dbstop if error
 clear all
 
+<<<<<<< HEAD
 arduino = serial('/dev/ttyUSB0');
+=======
+arduino = serial('COM10');
+>>>>>>> master
 arduino.InputBufferSize = 1;
 arduino.BaudRate = 115200;
 try 
@@ -35,7 +39,7 @@ while toc <= Tmax
     end
     t(i) = toc;
     if i > 1
-        axis([toc-5 toc+5 0 169]);
+        axis([toc-5 toc+5 0 255]);
         line([t(i-1) t(i)],[data(i-1) data(i)])
         drawnow
     end
