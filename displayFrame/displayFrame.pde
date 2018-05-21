@@ -32,7 +32,7 @@ void draw()
   // check if whole frame recieved and update display
   if(FrameBuffer.length == 901){
   updateFrame(FrameBuffer);
-  //save("frame.jpg");
+  save("frame.jpg");
   }
 }
 

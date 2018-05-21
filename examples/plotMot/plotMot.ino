@@ -3,7 +3,7 @@
 adns3080 ADNS_3080(4,10);
 
 void setup() {
-  Serial.begin(230400);
+  Serial.begin(9600);
   ADNS_3080.initSPI();
   ADNS_3080.powerUp();
 
@@ -22,8 +22,7 @@ void loop() {
 
   SQUAL  = ADNS_3080.readFrom(SQUAL_REG,1);
   Serial.write(SQUAL);
-  Serial.println(millis()); 
 
-  //delay(50);
+  delay(50);
   
 }

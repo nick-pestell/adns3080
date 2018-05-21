@@ -3,7 +3,7 @@ clear all
 
 arduino = serial('COM8');
 arduino.InputBufferSize = 1;
-arduino.BaudRate = 115200;
+arduino.BaudRate = 9600;
 try 
     fopen(arduino)
 catch err
@@ -11,7 +11,7 @@ catch err
     error('incorect com port')
 end
 
-Tmax = 30;
+Tmax = 50;
 figure
 grid on;
 xlabel('Time(s)');
@@ -36,9 +36,13 @@ while toc <= Tmax
     t(i) = toc;
     if i > 1
         axis([toc-5 toc+5 0 169]);
-        line([t(i-1) t(i)],[data(i-1) data(i)])
+        line([t(i-1) t(i)],[data(i-1) data(i)],'color','g','linewidth',2)
+        %plot(t(i),data(i));
+        set(gca, 'color', 'black')
+        set(gca, 'GridColor', 'white')
         drawnow
     end
+    cla
 
 end
 
