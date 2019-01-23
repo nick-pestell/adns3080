@@ -5,7 +5,7 @@ classdef plotDat < handle
     
     methods
         function self = plotDat()
-            self.arduino = serial('COM8');
+            self.arduino = serial('COM10');
             self.arduino.InputBufferSize = 1;
             self.arduino.Baudrate = 9600;
             try 
